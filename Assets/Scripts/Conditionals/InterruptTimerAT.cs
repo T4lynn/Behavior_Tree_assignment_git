@@ -6,12 +6,12 @@ namespace NodeCanvas.Tasks.Conditions {
 
 	public class InterruptTimerAT : ConditionTask {
 
-		float timer;
+		float timer = 0;
 		public float timerFinished;
 		//Use for initialization. This is called only once in the lifetime of the task.
 		//Return null if init was successfull. Return an error string otherwise
 		protected override string OnInit(){
-			timer = 0;
+			
 			return null;
 		}
 
@@ -32,9 +32,16 @@ namespace NodeCanvas.Tasks.Conditions {
 			{
 				Debug.Log("Timer finished");
 				timer = 0;
-				return true;
-			} else 
-			{ timer += Time.deltaTime; return false; }
+                
+                    return true;
+				
+			}
+			else
+			{
+				timer += Time.deltaTime;
+				return false;
+			}
+			
 		}
 	}
 }
