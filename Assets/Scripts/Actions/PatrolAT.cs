@@ -2,6 +2,7 @@ using NodeCanvas.Framework;
 using ParadoxNotion.Design;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace NodeCanvas.Tasks.Actions {
 
@@ -10,6 +11,7 @@ namespace NodeCanvas.Tasks.Actions {
 		public BBParameter<Vector3> acceleration;
 		public float accelerationStrength;
 		public float arrivalDistance;
+		public BBParameter<bool> arrivedAtPoint;
 
 
 		private int currentPatrolPointIndex = 0;
@@ -24,25 +26,33 @@ namespace NodeCanvas.Tasks.Actions {
 		//Call EndAction() to mark the action as finished, either in success or failure.
 		//EndAction can be called from anywhere.
 		protected override void OnExecute() {
-			float distanceToTarget = Vector3.Distance(patrolPoints[currentPatrolPointIndex].position, agent.transform.position);
-			Debug.Log("treasure position" + patrolPoints[currentPatrolPointIndex].position);
-			Debug.Log("distance to target" +  distanceToTarget);
-			if (distanceToTarget < arrivalDistance)
+			if (!arrivedAtPoint.value)
 			{
-				Debug.Log("Arrived");
-				currentPatrolPointIndex++;
-				Debug.Log(currentPatrolPointIndex + "Is current index");
-				if (currentPatrolPointIndex >= patrolPoints.Count)
+				float distanceToTarget = Vector3.Distance(patrolPoints[currentPatrolPointIndex].position, agent.transform.position);
+				//Debug.Log("treasure position" + patrolPoints[currentPatrolPointIndex].position);
+				//Debug.Log("distance to target" +  distanceToTarget);
+
+				if (distanceToTarget < arrivalDistance)
 				{
-					currentPatrolPointIndex = 0;
+					arrivedAtPoint.value = true;
+					Debug.Log("Arrived = " + arrivedAtPoint.value);
+
+					currentPatrolPointIndex++;
+					if (currentPatrolPointIndex >= patrolPoints.Count)
+					{
+						currentPatrolPointIndex = 0;
+					}
+
+
+
+
 				}
+				Vector3 moveDirection = patrolPoints[currentPatrolPointIndex].position - agent.transform.position;
+				moveDirection = new Vector3(moveDirection.x, 0f, moveDirection.z);
+				acceleration.value += moveDirection.normalized * accelerationStrength * Time.deltaTime;
 			}
-			Vector3 moveDirection = patrolPoints[currentPatrolPointIndex].position - agent.transform.position;
-			moveDirection = new Vector3(moveDirection.x, 0f, moveDirection.z);
-			acceleration.value += moveDirection.normalized * accelerationStrength * Time.deltaTime;
-		
 			EndAction(true);
-            Debug.Log("Ending Action");
+            //Debug.Log("Ending Action");
         }
 
 		//Called once per frame while the action is active.
