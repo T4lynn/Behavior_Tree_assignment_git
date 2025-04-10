@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerMovement : MonoBehaviour
 {
         Vector3 moveto;
-        float speed = 3f;
+       public float speed = 3f;
         public int coin;
         public Rigidbody rb;
         Vector3 motion;
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 targetPosition = Input.mousePosition;
             targetPosition.z = Camera.main.transform.position.y;
                 moveto = Camera.main.ScreenToWorldPoint(targetPosition);
-              //  Debug.Log(moveto);
+            //  Debug.Log(moveto);
 
             }
         }
