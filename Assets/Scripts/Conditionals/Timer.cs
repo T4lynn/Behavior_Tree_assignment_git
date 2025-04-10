@@ -31,7 +31,7 @@ namespace NodeCanvas.Tasks.Conditions {
 		protected override bool OnCheck() {
 			if (arrivedAtPoint.value)
 			{
-				Debug.Log("Timer Running");
+				//Debug.Log("Timer Running");
 				if (timer > timerFinished)
 				{
 					arrivedAtPoint.value = false;

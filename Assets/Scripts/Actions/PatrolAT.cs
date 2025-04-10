@@ -35,7 +35,7 @@ namespace NodeCanvas.Tasks.Actions {
 				if (distanceToTarget < arrivalDistance)
 				{
 					arrivedAtPoint.value = true;
-					Debug.Log("Arrived = " + arrivedAtPoint.value);
+					//Debug.Log("Arrived = " + arrivedAtPoint.value);
 
 					currentPatrolPointIndex++;
 					if (currentPatrolPointIndex >= patrolPoints.Count)
