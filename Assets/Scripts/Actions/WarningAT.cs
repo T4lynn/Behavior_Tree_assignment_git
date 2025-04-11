@@ -27,12 +27,12 @@ namespace NodeCanvas.Tasks.Actions {
 			if (sensedPlayer.value == true)
 			{
 				ExclamationMark.SetActive(true);
-				Debug.Log("active");
+				//Debug.Log("active");
 			}
 			else
 			{
                 ExclamationMark.SetActive(false);
-                Debug.Log("inactive");
+               // Debug.Log("inactive");
             }
 
 

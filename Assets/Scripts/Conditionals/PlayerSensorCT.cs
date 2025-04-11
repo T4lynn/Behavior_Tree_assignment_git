@@ -11,6 +11,8 @@ namespace NodeCanvas.Tasks.Conditions {
         public BBParameter<bool> sensedPlayer;
 		public Transform guardTransform;
 		public Collider[] hitColliders;
+		public float timer;
+		public float timerfinished;
         //Use for initialization. This is called only once in the lifetime of the task.
         //Return null if init was successfull. Return an error string otherwise
         protected override string OnInit(){
@@ -32,18 +34,28 @@ namespace NodeCanvas.Tasks.Conditions {
 		protected override bool OnCheck() {
             sphereRadius = new Vector3(guardTransform.position.x + radius, guardTransform.position.y + radius, guardTransform.position.z + radius);
 			hitColliders = Physics.OverlapSphere(guardTransform.position, radius);
-            Debug.DrawLine(guardTransform.position, sphereRadius, Color.red);
+           // Debug.DrawLine(guardTransform.position, sphereRadius, Color.red);
 
-            if ( hitColliders.Length > 0)
+            if ( hitColliders.Length > 0 || sensedPlayer.value)
             {
-                Debug.Log("Player in sphere");
+                //Debug.Log("Player in sphere");
 
                 sensedPlayer.value = true;
-				return true;
+				if (timer > timerfinished)
+				{
+					sensedPlayer.value = false;
+					timer = 0;
+					return true;
+				} else
+				{
+					timer += Time.deltaTime;
+                    return true;
+                }
+				
             }
             else 
 			{ 
-				Debug.Log("player out of sphere");
+				//Debug.Log("player out of sphere");
 				sensedPlayer.value = false;
                 return false;
             }
