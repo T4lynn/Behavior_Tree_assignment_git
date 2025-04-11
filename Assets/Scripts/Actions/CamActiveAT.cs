@@ -12,8 +12,9 @@ namespace NodeCanvas.Tasks.Actions
         public GameObject camActive;
         public GameObject camInactive;
          Collider[] hitCollidier;
-        public Vector3 center;
-        public Vector3 halfExtents;
+        public Transform centerPoint;
+        public Transform EdgePoint;
+        
         public BBParameter<GameObject> securityGuard;
         Blackboard guardBlackboard;
         //Use for initialization. This is called only once in the lifetime of the task.
@@ -41,11 +42,11 @@ namespace NodeCanvas.Tasks.Actions
 
             guardBlackboard = securityGuard.value.GetComponent<Blackboard>();
 
-          //  hitCollidier = Physics.OverlapBox(center, halfExtents);
+              hitCollidier = Physics.OverlapBox(centerPoint.position, EdgePoint.position);
 
-            Debug.DrawLine(center, halfExtents);
+            Debug.DrawLine(centerPoint.position, EdgePoint.position);
 
-            if (Physics.OverlapBox(center, halfExtents).Length > 0)
+            if (hitCollidier.Length > 0 )
             {
                 Debug.Log("Player visible");
 
