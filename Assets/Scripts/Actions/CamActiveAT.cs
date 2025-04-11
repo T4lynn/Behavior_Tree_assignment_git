@@ -36,8 +36,8 @@ namespace NodeCanvas.Tasks.Actions
         protected override void OnUpdate()
         {
 
-            //camActive.SetActive(true);
-            //camInactive.SetActive(false);
+            camActive.SetActive(true);
+            camInactive.SetActive(false);
 
 
             guardBlackboard = securityGuard.value.GetComponent<Blackboard>();
